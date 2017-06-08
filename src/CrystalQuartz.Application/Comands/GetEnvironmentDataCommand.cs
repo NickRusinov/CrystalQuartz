@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using CrystalQuartz.Application.Comands.Inputs;
     using CrystalQuartz.Application.Comands.Outputs;
     using CrystalQuartz.WebFramework.Commands;
@@ -18,12 +19,14 @@
             _customCssUrl = customCssUrl;
         }
 
-        protected override void InternalExecute(NoInput input, EnvironmentDataOutput output)
+        protected override Task InternalExecute(NoInput input, EnvironmentDataOutput output)
         {
             output.SelfVersion = GetAssemblyVersion(Assembly.GetCallingAssembly());
             output.QuartzVersion = GetAssemblyVersion(Assembly.GetAssembly(typeof (IScheduler)));
             output.DotNetVersion = GetDotNetVersion();
             output.CustomCssUrl = _customCssUrl;
+
+            return Task.FromResult<object>(null);
         }
 
         private string GetAssemblyVersion(Assembly assembly)

@@ -1,6 +1,7 @@
 ﻿namespace CrystalQuartz.WebFramework.Commands
 {
     using System;
+    using System.Threading.Tasks;
     using CrystalQuartz.WebFramework.Utils;
 
     public abstract class AbstractCommand<TInput, TOutput> : ICommand<TInput> where TOutput : CommandResult, new()
@@ -14,7 +15,7 @@
 
             try
             {
-                InternalExecute(input, result);
+                InternalExecute(input, result).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -31,6 +32,6 @@
         {
         }
 
-        protected abstract void InternalExecute(TInput input, TOutput output);
+        protected abstract Task InternalExecute(TInput input, TOutput output);
     }
 }

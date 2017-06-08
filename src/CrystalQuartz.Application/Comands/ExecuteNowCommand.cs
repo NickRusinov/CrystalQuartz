@@ -1,5 +1,6 @@
 ﻿namespace CrystalQuartz.Application.Comands
 {
+    using System.Threading.Tasks;
     using CrystalQuartz.Application.Comands.Inputs;
     using CrystalQuartz.Core;
     using CrystalQuartz.Core.SchedulerProviders;
@@ -11,9 +12,9 @@
         {
         }
 
-        protected override void PerformOperation(JobInput input)
+        protected override async Task PerformOperation(JobInput input)
         {
-            Scheduler.TriggerJob(new JobKey(input.Job, input.Group));
+            await Scheduler.TriggerJob(new JobKey(input.Job, input.Group));
         }
     }
 }

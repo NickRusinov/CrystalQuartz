@@ -1,5 +1,6 @@
 ﻿namespace CrystalQuartz.Application.Comands
 {
+    using System.Threading.Tasks;
     using CrystalQuartz.Application.Comands.Inputs;
     using CrystalQuartz.Core;
     using CrystalQuartz.Core.SchedulerProviders;
@@ -10,9 +11,9 @@
         {
         }
 
-        protected override void PerformOperation(NoInput input)
+        protected override async Task PerformOperation(NoInput input)
         {
-            Scheduler.Start();
+            await Scheduler.Start();
         }
     }
 }

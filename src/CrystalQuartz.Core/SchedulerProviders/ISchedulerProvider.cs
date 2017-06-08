@@ -1,5 +1,6 @@
 namespace CrystalQuartz.Core.SchedulerProviders
 {
+    using System.Threading.Tasks;
     using Quartz;
 
     public interface ISchedulerProvider
@@ -8,7 +9,7 @@ namespace CrystalQuartz.Core.SchedulerProviders
         /// Initializes provider and creates all necessary instances 
         /// (scheduler factory and scheduler itself).
         /// </summary>
-        void Init();
+        Task Init();
 
         /// <summary>
         /// Gets scheduler instance. Should return same instance on every call.

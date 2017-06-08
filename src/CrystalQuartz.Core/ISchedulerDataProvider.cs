@@ -1,5 +1,6 @@
 namespace CrystalQuartz.Core
 {
+    using System.Threading.Tasks;
     using CrystalQuartz.Core.Domain;
     using Quartz;
 
@@ -8,10 +9,10 @@ namespace CrystalQuartz.Core
     /// </summary>
     public interface ISchedulerDataProvider
     {
-        SchedulerData Data { get; }
+        Task<SchedulerData> GetData();
 
-        JobDetailsData GetJobDetailsData(string name, string group);
+        Task<JobDetailsData> GetJobDetailsData(string name, string group);
 
-        TriggerData GetTriggerData(TriggerKey key);
+        Task<TriggerData> GetTriggerData(TriggerKey key);
     }
 }

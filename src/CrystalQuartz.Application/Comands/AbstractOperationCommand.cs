@@ -1,5 +1,6 @@
 ﻿namespace CrystalQuartz.Application.Comands
 {
+    using System.Threading.Tasks;
     using CrystalQuartz.Application.Comands.Outputs;
     using CrystalQuartz.Application.Helpers;
     using CrystalQuartz.Core;
@@ -11,13 +12,14 @@
         {
         }
 
-        protected override void InternalExecute(TInput input, SchedulerDataOutput output)
+        protected override async Task InternalExecute(TInput input, SchedulerDataOutput output)
         {
-            PerformOperation(input);
-
-            SchedulerDataProvider.Data.MapToOutput(output);
+            await PerformOperation(input);
+            
+            var data = await SchedulerDataProvider.GetData();
+            data.MapToOutput(output);
         }
 
-        protected abstract void PerformOperation(TInput input);
+        protected abstract Task PerformOperation(TInput input);
     }
 }

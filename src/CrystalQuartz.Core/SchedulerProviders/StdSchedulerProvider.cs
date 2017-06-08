@@ -2,6 +2,7 @@ namespace CrystalQuartz.Core.SchedulerProviders
 {
     using System;
     using System.Collections.Specialized;
+    using System.Threading.Tasks;
     using Quartz;
     using Quartz.Impl;
 
@@ -14,23 +15,23 @@ namespace CrystalQuartz.Core.SchedulerProviders
             get { return false; }
         }
 
-        public void Init()
+        public async Task Init()
         {
             if (!IsLazy)
             {
-                LazyInit();    
+                await LazyInit();    
             }
         }
 
-        private void LazyInit()
+        private async Task LazyInit()
         {
             NameValueCollection properties = null;
             try
             {
                 properties = GetSchedulerProperties();
                 ISchedulerFactory schedulerFactory = new StdSchedulerFactory(properties);
-                _scheduler = schedulerFactory.GetScheduler();
-                InitScheduler(_scheduler);
+                _scheduler = await schedulerFactory.GetScheduler();
+                await InitScheduler(_scheduler);
             } 
             catch(Exception ex)
             {
@@ -44,8 +45,9 @@ namespace CrystalQuartz.Core.SchedulerProviders
             }
         }
 
-        protected virtual void InitScheduler(IScheduler scheduler)
+        protected virtual Task InitScheduler(IScheduler scheduler)
         {
+            return Task.FromResult<object>(null);
         }
 
         protected virtual NameValueCollection GetSchedulerProperties()
@@ -59,7 +61,7 @@ namespace CrystalQuartz.Core.SchedulerProviders
             {
                 if (_scheduler == null)
                 {
-                    LazyInit();
+                    LazyInit().GetAwaiter().GetResult();
                 }
 
                 return _scheduler;

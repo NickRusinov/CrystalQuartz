@@ -1,5 +1,6 @@
 namespace CrystalQuartz.Core.Tests
 {
+    using System.Threading.Tasks;
     using Quartz;
     using SchedulerProviders;
 
@@ -14,8 +15,9 @@ namespace CrystalQuartz.Core.Tests
         {
         }
 
-        public void Init()
+        public Task Init()
         {
+            return Task.FromResult<object>(null);
         }
 
         public IScheduler Scheduler

@@ -1,5 +1,6 @@
 ﻿namespace CrystalQuartz.Application.Comands
 {
+    using System.Threading.Tasks;
     using CrystalQuartz.Application.Comands.Inputs;
     using CrystalQuartz.Core;
     using CrystalQuartz.Core.SchedulerProviders;
@@ -12,9 +13,9 @@
         {
         }
 
-        protected override void PerformOperation(GroupInput input)
+        protected override async Task PerformOperation(GroupInput input)
         {
-            Scheduler.PauseJobs(GroupMatcher<JobKey>.GroupEquals(input.Group));
+            await Scheduler.PauseJobs(GroupMatcher<JobKey>.GroupEquals(input.Group));
         }
     }
 }

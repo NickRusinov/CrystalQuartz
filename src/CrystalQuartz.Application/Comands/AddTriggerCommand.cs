@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CrystalQuartz.Application.Comands.Inputs;
 using CrystalQuartz.Application.Comands.Outputs;
 using CrystalQuartz.Core;
@@ -15,7 +16,7 @@ namespace CrystalQuartz.Application.Comands
         {
         }
 
-        protected override void InternalExecute(AddTriggerInput input, CommandResultWithErrorDetails output)
+        protected override async Task InternalExecute(AddTriggerInput input, CommandResultWithErrorDetails output)
         {
             TriggerBuilder triggerBuilder = TriggerBuilder
                 .Create()
@@ -49,8 +50,8 @@ namespace CrystalQuartz.Application.Comands
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            Scheduler.ScheduleJob(triggerBuilder.Build());
+            
+            await Scheduler.ScheduleJob(triggerBuilder.Build());
         }
     }
 }
