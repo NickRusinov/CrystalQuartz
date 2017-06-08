@@ -37,7 +37,7 @@ namespace CrystalQuartz.Build
 
                     return new
                     {
-                        Version = "4.2.1.0",
+                        Version = "5.0.0-alpha1",
                         Configuration = "Debug",
                         Solution = new SolutionStructure(currentDirectory.Parent)
                     }.AsTaskResult();
@@ -52,8 +52,8 @@ namespace CrystalQuartz.Build
                     Attributes =
                     {
                         _ => new AssemblyProductAttribute("CrystalQuartz"),
-                        _ => new AssemblyVersionAttribute(data.Version),
-                        _ => new AssemblyFileVersionAttribute(data.Version)
+                        _ => new AssemblyVersionAttribute(data.Version.Split('-')[0]),
+                        _ => new AssemblyFileVersionAttribute(data.Version.Split('-')[0])
                     }
                 });
 
